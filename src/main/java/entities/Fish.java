@@ -2,6 +2,8 @@ package entities;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,6 +11,7 @@ public class Fish extends Animal {
     public enum FishLivEnv {
         FRESH_WATER, SEA_WATER
     }
+    @Enumerated(EnumType.STRING)
     private FishLivEnv livingEnv;
 
     public Fish() {

@@ -11,7 +11,7 @@ public class Main {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu-petstore");
         EntityManager em = emf.createEntityManager();
 
-        //Insertions en BDD :
+        //Insertions dans la base de données :
         EntityTransaction et = em.getTransaction();
         et.begin();
         Address address1 = new Address("12", "rue de la soif", "44000", "NANTES");
@@ -53,23 +53,13 @@ public class Main {
         et.commit();
 
         //Réaliser une requête qui permet d’extraire tous les animaux d’une animalerie donnée
-
-        TypedQuery<Animal> query1 = em.createQuery("select a from Animal a where a.petstore=" + petstore1, Animal.class);
+        TypedQuery<Animal> query1 = em.createQuery("select a from Animal a where a.petstore=" + petstore1.getId(), Animal.class);
         List<Animal> listAnimal = query1.getResultList();
-        if (listAnimal != null){
+        if (!listAnimal.isEmpty()){
             for (Animal a: listAnimal) {
-                System.out.println("Id : " + a.getId() + " et couleur : " + a.getColor());
+                System.out.println("Id : " + a.getId());
             }
         }
-
-        /* Récupération d'un livre en fonction de son auteur :
-        TypedQuery<Livre> query2 = em.createQuery("select l from Livre l where l.auteur='Emile Zola'", Livre.class);
-        Livre livre4 = query2.getResultList().get(0); // ou query2.getSingleResult()
-        if (livre4 != null){
-            System.out.println("Titre du livre de " + livre4.getAuteur() + " : " + livre4.getTitre());
-        }*/
-
-        System.out.println("em : " + em);
         em.close();
         emf.close();
 
